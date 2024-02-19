@@ -23,3 +23,5 @@ format = "service-worker"
 [secrets]
 # NAME
 # PASS
+# GHPAT
+# GIST

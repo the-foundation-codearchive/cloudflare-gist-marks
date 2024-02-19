@@ -13,4 +13,6 @@ node_modules/
 .env
 yarn-error.log
 
-public/static/dist
+public/static/dist.dev.vars
+.wrangler
+.dev.vars
