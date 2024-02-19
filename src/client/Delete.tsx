@@ -28,7 +28,7 @@ export const Delete = () => {
     const headers = {
       'Content-Type': 'application/json',
     }
-    const response = await fetch('/links', { method: 'DELETE', headers, body })
+    const response = await fetch('/links_del', { method: 'DELETE', headers, body })
     if (!response.ok) {
       return
     }

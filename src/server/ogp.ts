@@ -21,7 +21,7 @@ const extractCanonical = (doc: DOMParser.Dom): string | null => {
   return null
 }
 
-const fetchOGP = async (url: string): Promise<OGP> => {
+const fetchOGP = async (url: string,mytitle: string,mycat: string,notes: string): Promise<OGP> => {
   let ogp: OGP
 
   const response = await fetch(url)
@@ -43,22 +43,37 @@ const fetchOGP = async (url: string): Promise<OGP> => {
         }
         return pre
       }, {})
-    let title = data['og:title']
-    if (!title) {
-      const elements = doc.getElementsByTagName('title')
-      title = elements ? elements[0].textContent : url
+    let title=""
+    if(mytitle!="") {
+      title = mytitle
+    } else {
+      let tmptitle = data['og:title']
+      if(tmptitle) {title=tmptitle}
+      if(!tmptitle) {
+          const elements = doc.getElementsByTagName('title')
+          title = elements ? elements[0].textContent : url
+      }
     }
+    let sendcat="default"
+    if(mycat!="") {
+      let sendcat=mycat;
+    } 
+
     ogp = {
       url: url,
+      cat: sendcat,
       title: title,
-      description: truncateString(data['og:description'], 60),
       image: data['og:image'],
+    }
+    let desctmp=truncateString(data['og:description'], 60)
+    if(desctmp!="") {
+      ogp.description=desctmp
     }
   } else {
     ogp = {
       url: url,
       title: url,
-    }
+    }<fmetata
   }
 
   ogp.title = decode(ogp.title)

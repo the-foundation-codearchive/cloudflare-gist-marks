@@ -1,0 +1,130 @@
+app.use('/genjskey', basicAuth({ username: NAME, password: PASS }))
+
+app.get('/genjskey', async (c) => {
+    const newkey = await genKeyPair( )
+    return c.json({result:JSON.parse(newkey)})
+  })
+const genKeyPair = async (): Promise<string> => {
+  try {
+    console.log("generating keypair")
+    let keyPair = await crypto.subtle.generateKey(
+      {
+        name: 'AES-GCM',
+        length: 256,
+      },
+      true,
+      ['encrypt', 'decrypt']
+    );
+    const encode = (e => e.encode.bind(e))(new TextEncoder)
+    console.log(keyPair) 
+
+    let { publicKey: pub, privateKey: key } = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-521' }, true, ['deriveKey']) // generate key pairs
+    console.log(privateKey) 
+   
+    
+    const { publicKey, privateKey } = await crypto.subtle.generateKey(
+      {
+        name: "RSA-OAEP",
+        modulusLength: 2048, // can be 1024, 2048, or 4096
+        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+        hash: { name: "SHA-256" }, // can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+      },
+      true, // whether the key is extractable (i.e. can be used in exportKey)
+      ["encrypt", "decrypt"] // can be any combination of "encrypt" and "decrypt"
+    );
+    console.log("privkey:")
+    console.log(privateKey)
+
+    return JSON.stringify({status:"ok",pubkey: publicKey})
+  } catch (e) {
+      return JSON.stringify({status:"error",error: e})
+  }
+}
+
+
+---------------
+app.get('/testfunction', (c) => {
+let logstr=""
+//var sodium = require('sodium-native')
+//
+//var nonce = Buffer.alloc(sodium.crypto_secretbox_NONCEBYTES)
+//var key = sodium.sodium_malloc(sodium.crypto_secretbox_KEYBYTES) // secure buffer
+//var message = Buffer.from('Hello, World!')
+//var ciphertext = Buffer.alloc(message.length + sodium.crypto_secretbox_MACBYTES)
+//
+//sodium.randombytes_buf(nonce) // insert random data into nonce
+//sodium.randombytes_buf(key)  // insert random data into key
+//
+//// encrypted message is stored in ciphertext.
+//sodium.crypto_secretbox_easy(ciphertext, message, nonce, key)
+//
+//console.log('Encrypted message:', ciphertext)
+//
+//var plainText = Buffer.alloc(ciphertext.length - sodium.crypto_secretbox_MACBYTES)
+//
+//if (!sodium.crypto_secretbox_open_easy(plainText, ciphertext, nonce, key)) {
+//  console.log('Decryption failed!')
+//} else {
+//  console.log('Decrypted message:', plainText, '(' + plainText.toString() + ')')
+//}
+/////const sodium = require('sodium-javascript')
+/////
+/////const key = Buffer.alloc(sodium.crypto_secretbox_KEYBYTES)
+/////const nonce = Buffer.alloc(sodium.crypto_secretbox_NONCEBYTES)
+/////
+/////sodium.randombytes_buf(key)
+/////sodium.randombytes_buf(nonce)
+/////
+/////const message = Buffer.from('Hello, World!')
+/////const cipher = Buffer.alloc(message.length + sodium.crypto_secretbox_MACBYTES)
+/////
+/////sodium.crypto_secretbox_easy(cipher, message, nonce, key)
+/////
+/////console.log('Encrypted:', cipher)
+/////
+/////const plainText = Buffer.alloc(cipher.length - sodium.crypto_secretbox_MACBYTES)
+/////
+/////sodium.crypto_secretbox_open_easy(plainText, cipher, nonce, key)
+/////
+//  let sodium;
+//
+//async function encrypt(text, key) {
+//    if (!sodium) sodium = await SodiumPlus.auto();
+//
+//    let nonce = await sodium.randombytes_buf(24);
+//    let encrypted = await sodium.crypto_secretbox(text, nonce, key);
+//    return Buffer.concat([nonce, encrypted]).toString('hex');
+//}
+//
+//async function decrypt(ciphertext, key) {
+//    if (!sodium) sodium = await SodiumPlus.auto();
+//
+//    const decoded = Buffer.from(ciphertext, 'hex');
+//    const nonce = decoded.slice(0, 24);
+//    const cipher = decoded.slice(24);
+//    return sodium.crypto_secretbox_open(cipher, nonce, key);
+//}
+//
+//async function randomString(length) {
+//    if (!sodium) sodium = await SodiumPlus.auto();
+//    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//    let text = "";
+//    let r;
+//    for (var i = 0; i < length; i++){
+//        r = await sodium.randombytes_uniform(possible.length);
+//        text += possible[r];
+//    }
+//    return text;
+//}
+//
+//// Wrap this in an async function for calling:
+//(async function () {
+//    if (!sodium) sodium = await SodiumPlus.auto()
+//    var text = randomString(50)
+//    var key = await sodium.crypto_secretbox_keygen()
+//    let aa=performance.now()
+//    for (var i=0; i<1000; i++) {
+//        await decrypt(await encrypt(text, key), key)
+//    }
+//    console.log((performance.now()-aa)/1000)
+//})();

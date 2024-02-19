@@ -12,12 +12,23 @@ import { Navbar, Container, Form, Button } from 'react-bootstrap'
 const App = () => {
   const [links, setLinks] = useState<Link[]>([])
   const [url, setURL] = useState(getParam('url') || '')
+  const [cat, setCAT] = useState(getParam('cat') || '')
+  const [title, setTITLE] = useState(getParam('title') || '')
+
   const [showInfo, setShowInfo] = useState({ show: false, url: url })
   const [cursor, setCursor] = useState('')
   const [listComplete, setListComplete] = useState(false)
 
-  const handleChange: ChangeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
+
+  const handleChangeCAT: ChangeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setCAT(e.target.value)
+
+  const handleChangeURL: ChangeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setURL(e.target.value)
+
+    const handleChangeTITLE: ChangeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setTITLE(e.target.value)
+
   const handleSubmit: FormEventHandler = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault()
     createNewLink()
@@ -30,7 +41,7 @@ const App = () => {
 
   const fetchData = async () => {
     const query = new URLSearchParams({ cursor: cursor, limit: '10' })
-    const url = `/links?${query}`
+    const url = `/links_get?${query}`
     const response = await fetch(url)
     const data: ListResult = await response.json()
     if (listComplete === false) {
@@ -55,8 +66,9 @@ const App = () => {
     const headers = {
       'Content-Type': 'application/json',
     }
-    const response = await fetch('/links', { method: 'POST', headers, body })
+    const response = await fetch('/link_add', { method: 'POST', headers, body })
     if (!response.ok) {
+      console.log("failed addding link for "+url)
       return
     }
     setShowInfo({ show: true, url: url })
@@ -79,11 +91,27 @@ const App = () => {
             <Form.Group>
               <Form.Control
                 value={url}
-                onChange={handleChange}
+                onChange={handleChangeURL}
                 className='text-gray-700 shadow border rounded border-gray-300 focus:outline-none focus:shadow-outline
               px-3 mb-3'
                 type='text'
                 placeholder='URL'
+              />
+              <Form.Control
+                value={cat}
+                onChange={handleChangeCAT}
+                className='text-gray-700 shadow border rounded border-gray-300 focus:outline-none focus:shadow-outline
+              px-3 mb-3'
+                type='text'
+                placeholder='category (defaults to default)'
+              />
+              <Form.Control
+                value={title}
+                onChange={handleChangeTITLE}
+                className='text-gray-700 shadow border rounded border-gray-300 focus:outline-none focus:shadow-outline
+              px-3 mb-3'
+                type='text'
+                placeholder='title ( by default taken from og:image or html title'
               />
             </Form.Group>
             <Button
