@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+export const indexhtml = `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -26,4 +26,5 @@
     <div><h3><a href="/edit"> Edit Bookmarks</a></h3></div><hr>
     <script src="/gist-via-github.js"></script>
   </body>
-</html>
+</html>`
+

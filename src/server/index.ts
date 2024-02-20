@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { serveStatic } from 'hono/cloudflare-workers'
 import { basicAuth } from 'hono/basic-auth'
+import { indexhtml } from './indexhtml'
 // const { SodiumPlus } = require('sodium-plus');
 
 import { getLinks, addLink, deleteLink , genKeyPair } from './app'
@@ -11,17 +12,26 @@ declare let PASS: string
 
 declare let GIST: string
 declare let GHPAT: string
+declare let GHUSR: string
 
 //const hono = new Hono()
 const app = new Hono()
 
-//GIST JS example //https://gist.github.com/benchonaut/bbd2b087bfb9ee6675cb7a44f6f7f366.js
+//GIST JS example //https://gist.github.com/username/GISTID.js
 
+app.use('/links', basicAuth({ username: NAME, password: PASS }))
+app.use('/links/*', basicAuth({ username: NAME, password: PASS }))
 app.use('/edit.html', basicAuth({ username: NAME, password: PASS }))
 app.use('/edit', basicAuth({ username: NAME, password: PASS }))
 //app.use('/static/*', serveStatic({ root: './static/' }))
 app.get('/favicon.ico', serveStatic({ path: './favicon.ico' }))
 app.get('/edit', serveStatic({ path: './edit.html' }))
+app.get('/edit.html', serveStatic({ path: './edit.html' }))
+
+app.get('/', (c) =>  {  
+  //return c.html(await indexhtml.replace("/gist-via-github.js","https://gist.github.com/'+GHUSR+'/'+GIST+'.js"))
+  return c.html(indexhtml.replace("/gist-via-github.js","https://gist.github.com/"+GHUSR+"/"+GIST+".js"))
+})
 app.get('/*', serveStatic({ root: './' }))
 app.get('/static/*', serveStatic({ root: './static/' }))
 app.post('/link_add',async (c) => {
@@ -86,8 +96,7 @@ app.post('/link_add',async (c) => {
     const links = await getLinks(cursor,category,Number(limit),   c.event )
     return c.json(links)
   })
-app.use('/links', basicAuth({ username: NAME, password: PASS }))
-app.use('/links/*', basicAuth({ username: NAME, password: PASS }))
+
   
 //export default app
 app.fire()

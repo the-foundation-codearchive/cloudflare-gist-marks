@@ -210,7 +210,7 @@ const getLinks = async (cursor: string | undefined,category: string | "all" , li
                allowusers.push(ownerurl)
             } catch(e) {
               allowusers=[ownerurl]
-              async_error_handler(context,"allow users not parseable")
+              async_error_handler(context,"err: allow users not parseable: "+e)
             }
            //console.log(ownerurl)
            //async_error_handler(context,"owner "+ownerurl)
@@ -235,6 +235,7 @@ const getLinks = async (cursor: string | undefined,category: string | "all" , li
            ]
            }
            if('files' in gistJSON) {
+            console.log("scan files")
             Object.keys(gistJSON.files).forEach(filename => {
               //async_error_handler(context,filename)
               //async_error_handler(context,gistJSON.files[filename])
@@ -245,6 +246,7 @@ const getLinks = async (cursor: string | undefined,category: string | "all" , li
               if(gistJSON.files[filename].truncated==true)  { truncated.push(filename) }
             });
            }
+           console.log("done file_scan")
            if( bookjsfound==false ) { 
                 console.log("0 no default json")
            } else {
@@ -265,10 +267,13 @@ const getLinks = async (cursor: string | undefined,category: string | "all" , li
                 //async_error_handler(context,JSON.stringify(fulldefinit))
                 async_error_handler(context,"1. get full default file")
                 const response = await fetch(fulldefurl, fulldefinit);
+                console.log("trying default json")
                 bookstore_default=await response.json()
             } else {
+                console.log("using present json")
                 // we have full default file from first api request
-                bookstore_default=JSON.parse(await gistJSON.files["bookmarks.json"].body)
+                //console.log(JSON.stringify(await gistJSON.files["bookmarks.json"]))
+                bookstore_default=JSON.parse(await gistJSON.files["bookmarks.json"].content)
                 async_error_handler(context,"1. hav full default file")
             }
            }
@@ -326,7 +331,7 @@ const getLinks = async (cursor: string | undefined,category: string | "all" , li
                  let commentsJSON=await commentresponse.json()
                  let elmcount=0
                   //commentsJSON.forEach( async element => {
-                  for (const element of commentsJSON) {
+                    for (const element of commentsJSON) {
                     elmcount=elmcount+1
                     let commentowner=element.user.url
                     //async_error_handler(context,element)
@@ -458,8 +463,37 @@ const getLinks = async (cursor: string | undefined,category: string | "all" , li
 
            //async_error_handler(context,files["bookmarks.json"])
            //async_error_handler(context,JSON.stringify(JSON.parse(await response.text())));
-
-          return "hello string"
+          // build the returnable list
+          let listing: Link[]=[];
+          for (const curmark of bookstore_default.bookmarks) {
+            //returnthing.push(Link: curmark)
+            let curlink: Link = {
+              url: curmark.url,
+              key: curmark.key,
+              title: curmark.title
+            };
+            if("description" in curmark) {
+              curlink.description=curmark.description
+            }
+            if("image" in curmark) {
+              curlink.image=curmark.image
+            }
+            //export type Link = {
+            //  url: string
+            //  key: string
+            //  title: string
+            //  description?: string
+            //  image?: string
+            //}
+            listing.push(curlink)
+          }
+          let returnthing: ListResult = {
+            links: listing,
+            cursor: "0",
+            complete: true
+          }
+          return returnthing
+          //return "hello string"
         } //end fetch_status_ok
   } catch (err) {
     async_error_handler(context,'error ' + err)

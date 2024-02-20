@@ -32,7 +32,7 @@ export const makeKey = async (url: string): string => {
     myText // The data you want to hash as an ArrayBuffer
   );
   //console.log(new Uint8Array(myDigest));
-  digtxt=new TextDecoder().decode(new Uint8Array(myDigest));
+  let digtxt=new TextDecoder().decode(new Uint8Array(myDigest));
   const hash=truncateString(digtxt,12)+Date.now();
   return  `${hash}`
 }

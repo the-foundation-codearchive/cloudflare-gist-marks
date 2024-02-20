@@ -52,11 +52,16 @@ kv_namespaces = [
 ]
 ```
 
-Set your Basic Auth username and password:
+Set your Basic Auth username and password :
+
 
 ```plain
 $ wrangler secret put NAME
 $ wrangler secret put PASS
+$ wrangler secret put GHPAT
+$ wrangler secret put GHUSR
+$ wrangler secret put GIST
+
 ```
 
 ## Build&Deploy
