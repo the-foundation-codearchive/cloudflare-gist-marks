@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style> 
+
+    input[type="text"] {  
+      color:#eee; }
+  .roundme {
+    border-radius: 10px 12px 10px 12px; 
+  }
+  #buttonbar {
+      position:relative;
+      //align: right
+      bottom:90px;
+      //width:100%;
+      height:60px;   /* Height of the footer */
+     // background:#6cf;
+   }
+  #spacer {
+      position:relative;
+      bottom:0;
+      width:100%;
+      height:90px;   /* Height of the footer */
+     // background:#6cf;
+   }
+   #logconsole {
+      position:fixed;
+      bottom:0;
+      width:100%;
+      height:90px;   /* Height of the footer */
+      background:#6cf;
+   }
+   #deletecontainer {
+    border-radius: 10px 12px 10px 12px; 
+      z-index: 6;
+      position:fixed;
+      align-items: center;
+
+      bottom:10px;
+      left: 20px;
+      margin: 10px;
+      margin-top: 6px;
+      min-height:40px;   /* Height of the footer */
+      background:#6df;
+   }
+   
+
+   #clockcontainer {
+      border-radius: 10px 12px 10px 12px; 
+      position:absolute;
+      bottom:0;
+      align: left;
+      padding-left: 5px;
+      width:100%;
+      height:90px;   /* Height of the footer */
+      background:rgb(117, 200, 241);
+   }
+   .timecode {
+  text-overflow: ellipsis;
+  max-height: 5ch;
+  font-size: 10pt;
+  max-width: 42ch;
+  padding: 0;
+  margin: 0;
+}
+.serial {
+  text-overflow: ellipsis;
+  max-height: 5ch;
+  height: 5ch;
+  width: 42ch;
+  max-width: 42ch;
+padding: 0;
+}
+.gameboydisplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-overflow: ellipsis;
+  text-align: center;
+  background: black ;height: 333px;
+  width: 266px;
+  position: absolute;
+  left: 69px;
+  top: 33px;
+  background-repeat: no-repeat;
+  background-attachment: inherit;
+  background-size: contain;
+/*max-height: 5ch;
+height: 5ch;
+width: 42ch;
+*/
+  max-width: 42ch;
+  padding: 0;
+}
+table {
+  font-family: Monospace;
+  border: 0px solid black;
+  outline: auto;
+  outline-style: round;
+  border-radius: 12px;
+  outline-color: black;
+}
+th, td {
+  outline-color: black;
+/*  text-align:center;
+  border:1px solid black;*/
+  padding:5px
+  border: 0px solid black;
+}
+tr {
+  outline-color: black;
+  outline: auto;
+  outline-style: round;
+  border-radius: 12px;
+  border: 0px solid black;
+}
+thead {
+  outline-color: black;
+  outline: auto;
+  outline-style: round;
+  border-radius: 12px;
+  border: 0px solid black;
+}
+tbody {
+  outline-color: black;
+  outline: auto;
+  outline-style: round;
+  border-radius: 12px;
+  border: 0px solid black;
+}
+
+    //table { font-size: 12px; font-family: Monospace; }
+    input {  color:#eee;font-size: 12px; font-family: Monospace;  }
+    .textcolor {
+     background-image:linear-gradient(90deg,blue,yellow,red,purple);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     border-radius: 42px;
+    }
+    
+    .gradient2 {
+     background-image:linear-gradient(#eee, #333);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     border-radius: 42px;
+    }
+    
+    table , input {
+        background: -webkit-linear-gradient(#333, #000);
+        #-webkit-background-clip: text;
+        #-webkit-text-fill-color: transparent;
+        color: white;
+        border-collapse:separate;
+        border:solid grey 1px;
+        border-radius:6px;
+        -moz-border-radius:6px;
+    }
+    #clock  {
+        background: -webkit-linear-gradient(#333, #000);
+        #-webkit-background-clip: text;
+        #-webkit-text-fill-color: transparent;
+        color: white;
+        border-collapse:separate;
+        border:solid grey 1px;
+        border-radius:8px;
+        -moz-border-radius:8px;
+    }
+    td, th {
+        border-left:solid grey 1px;
+        border-top:solid grey 1px;
+    }
+    
+    th {
+        background-color: blue;
+        border-top: none;
+    }
+    
+    td:first-child, th:first-child {
+         border-left: none;
+    }
+    
+    </style>
+    <script>
+        function filltty(msg) {
+    document.getElementById("tty").textContent =   msg;
+  }
+  function logtty(msg) {
+    document.getElementById("tty").textContent =  document.getElementById("tty").textContent  + "\n" + msg;
+    var myDiv = document.getElementById("tty");
+        myDiv.scrollTop = myDiv.scrollHeight;
+  }
+  function clearText() {
+    document.getElementById("statusdisplay").textContent = ""
+  }
+  function displayText(msg) {
+    //document.getElementById("statusbackground").style.backgroundImage="url('./nxqr.gif')";
+    document.getElementById("statusdisplay").style.background="#eeeeee";
+    document.getElementById("statusdisplay").style.visibility="visible";
+    document.getElementById("statusdisplay").textContent = msg;
+  }
+    </script>
+       
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer" />
+
+    <title>Gist Marks</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://is.gd/gistmarkslogov1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://is.gd/gistmarkslogov1" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://is.gd/gistmarkslogov1" />
+    <link rel="manifest" href="https://gistmarks.pages.dev/static/site.webmanifest" crossorigin="use-credentials" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div id="toolbar">  
+      </div>
+    <div id="app"></div>
+    
+
+      
+
+    </div>
+
+  </div>
+  <div id="bottom_r" style="align: center ; max-width:555px;color: #fff">      <address className='italic text-center pb-4'>
+    <a href='/'>Gist Marks</a>
+   </address></div>
+   <div id="spacer" ></div>
+   <div id="logconsole" >
+        <div id="clockcontainer" style="align: left ; max-width:555px;"> <img src="https://visitor-badge.lithub.cc/badge?page_id=gist-marks.pages.dev&left_color=blue&right_color=lightblue" ></div>
+  </div>
+  <div id="statusdiv" >
+    <center>
+      <table>
+      <center>
+        <tr>
+            <pre ><code  style='padding: 0' class='language-apache hljs' data-language='json'> STATUS DISPLAY </code></pre></tr>
+            <tr>
+
+              <td><pre width='50px'>
+  <code width='50px' id=tty   class='language-apache hljs serial' data-language='json'>__________asdasdasdasd
+  123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+  __________
+  __________ </code></pre></td>
+              <td style='max-width: 222px;width: 120px;'><center><p width='50px'><pre width='50px'><code width='50px' style='padding: 0'  class='language-apache hljs' data-language='json'> #SERIAL OUT# </code></pre></p></center></td>
+                 </tr>
+            <tr><center>
+            <td colspan="2"><center>
+              <!-- <div id="statusbackground" style="background-image: url('/favicon.ico');text-align: 640px;width: 413px;height: 640px;background-repeat: no-repeat;background-attachment: inherit;background-size: contain;position: relative;" > -->
+                        <div id="statusdisplay" class="statusdisplay"></div>
+                        </div></center></td></center>
+          </tr>
+
+          </center>
+        </table>
+      </center>
+  </div>
+  <script src="/gistmarks.js" async defer></script>
+  <script src="/static/dist/app.js" async defer></script>
+ </body>
+  
+</html>

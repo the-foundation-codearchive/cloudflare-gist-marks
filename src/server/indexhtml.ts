@@ -7,10 +7,10 @@ export const indexhtml = `<!DOCTYPE html>
 
     <title>GistMarks</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/icon/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/icon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/icon/favicon-16x16.png" />
-    <link rel="manifest" href="/static/site.webmanifest" crossorigin="use-credentials" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://is.gd/gistmarkslogov1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://is.gd/gistmarkslogov1" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://is.gd/gistmarkslogov1" />
+    <link rel="manifest" href="https://gistmarkss.pages.dev/static/site.webmanifest" crossorigin="use-credentials" />
 
     <link
       rel="stylesheet"
@@ -23,7 +23,7 @@ export const indexhtml = `<!DOCTYPE html>
 
   <body>
     <nav class="navbar navbar-expand navbar-light"><div class="container"><a href="/" class="w-full text-center mx-auto navbar-brand"><h1 class="text-2xl font-bold">GistMarks</h1></a></div></nav>
-    <div><h3><a href="/edit"> Edit Bookmarks</a></h3></div><hr>
+    <div><h3><a href="/gistmarks"> Edit Bookmarks</a></h3></div><hr>
     <script src="/gist-via-github.js"></script>
   </body>
 </html>`

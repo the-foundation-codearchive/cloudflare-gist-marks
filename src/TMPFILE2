@@ -1,0 +1,81 @@
+
+           //let main_gistJSON=mainsource
+
+           console.log("have jsn")
+
+           if('files' in main_gistJSON) {
+            //console.log(main_gistJSON.files)
+            console.log("scan files 1")
+            //Object.keys(main_gistJSON.files).forEach(filename => {
+            for (const filename of Object.keys(main_gistJSON.files)) {
+              if(filename==CONFIGFILE)                      { configfound=true         }
+            }
+            //});
+           }
+           console.log("done file_scan 1")
+           ////if( bookjsfound==false ) { 
+           ////     console.log("0 no default json")
+           ////} else {
+           //// if(truncated.includes("bookmarks.json")) {
+           ////   console.log("getting full bookmarks.json")
+           ////   //const fulldefurl="https://gist.githubusercontent.com/username/GISTID/raw/README.md" (works without commit id)
+           ////   const fulldefurl=main_gistJSON.files["bookmarks.json"].raw_url;
+           ////   const fulldefinit = {
+           ////     method: "GET",
+           ////     headers: {
+           ////       "Accept": "application/vnd.github+json",
+           ////       "content-type": "application/json;charset=UTF-8",
+           ////       "X-GitHub-Api-Version": "2022-11-28",
+           ////       "User-Agent": "GistMarksCloud/0.1 Firefox/666",
+           ////       // "Authorization": "Bearer "+GHPAT,
+           ////     },
+           ////   };
+           ////     //async_error_handler(context,JSON.stringify(fulldefinit))
+           ////     async_error_handler(context,"1. get full default file")
+           ////     const response = await fetch(fulldefurl, fulldefinit);
+           ////     console.log("trying default json")
+           ////     bookstore_default=JSON.parse(await response.json())
+           //// } else {
+           ////     console.log("using present json")
+           ////     // we have full default file from first api request
+           ////     //console.log(JSON.stringify(await gistJSON.files["bookmarks.json"]))
+           ////     bookstore_default=JSON.parse(await gistJSON.files["bookmarks.json"].content)
+           ////     async_error_handler(context,"1. hav full default file")
+           //// }
+           ////}
+           // first check cache for config
+          ///////// if(!configfound) {
+          /////////  let response = await CFcache.match(CONFIGFILE);
+          /////////  if (!response) { console.log('Response for request url: '+CONFIGFILE+' not present in cache. Fetching and caching request.');
+          ///////// } else {
+          /////////  
+          ///////// }
+          /////////}
+ 
+            //
+            //const cacheconfresp=fetch(cachefileurl,cacheinit)
+
+            myconfig=JSON.parse(await main_gistJSON.files[CONFIGFILE].content)
+            
+
+
+
+ 
+  
+
+          }           
+           //if(!configfound) {
+           // async_error_handler(context,"1 init GistMarksCloud-settings.js")
+           // default={ url: "https://github.com/thefoundation/cloudflare-gist-marks", description:"gist-marks-home"}
+           // github_gist_file_create(GHPAT,GIST,"GistMarksCloud-settings.js",JSON.stringify(default))
+           //}
+           //async_error_handler(context,"searching comments")
+           //default={ url: "https://github.com/thefoundation/cloudflare-gist-marks", description:"gist-marks-home"}
+           // end valid gist api response
+
+           //await async_error_handler(context,JSON.stringify(bookstore_default));
+
+           //async_error_handler(context,files["bookmarks.json"])
+           //async_error_handler(context,JSON.stringify(JSON.parse(await response.text())));
+
+}

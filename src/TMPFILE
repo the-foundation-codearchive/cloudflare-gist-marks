@@ -1,0 +1,17 @@
+           if(!("README.md" in main_gistJSON.files)) {
+            async_error_handler(context,"0 init README")
+            const str = '' +
+            '# Bookmarks [Collection](https://github.com/thefoundation/cloudflare-gist-marks) <br>' +
+            ''+
+            '<hr>'+
+            '	<span> Gist-Marks powered by:<b>❤ unicorns &amp;	</b></span>'+
+            '	' +
+            '<a href="https://the-foundation.gitlab.io/"><div><img src="https://hcxi2.2ix.ch/github/github.com/thefoundation/cloudflare-gist-marks/README.md/logo.jpg" width="240" height="135"/></div></a>'+
+            '';
+            //async_error_handler(context,"sending "+str)
+            //fork thisjob
+            context.waitUntil( await github_gist_file_create(context,GHPAT,GIST,"README.md",str) );
+           }
+
+
+           

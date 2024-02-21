@@ -45,11 +45,12 @@ const App = () => {
     const response = await fetch(url)
     const data: ListResult = await response.json()
     if (listComplete === false) {
-      setLinks([...links, ...data.links])
+      setLinks([...links, ...data.bookmarks])
       setCursor(data.cursor || '')
       setListComplete(data.complete)
     }
   }
+  
 
   useEffect(() => {
     fetchData()
@@ -81,10 +82,13 @@ const App = () => {
       <Navbar>
         <Container>
           <Navbar.Brand className='w-full text-center mx-auto' href='/'>
-            <h1 className='text-2xl font-bold'>Marks</h1>
+            <h1 className='text-2xl font-bold'> Gist Marks</h1>
           </Navbar.Brand>
         </Container>
+          <Navbar.Brand className='align-right text-center mx-auto' href='/'>
+          </Navbar.Brand>
       </Navbar>
+
       <Container fluid='sm' className='pb-2 px-4'>
         <div className='flex justify-center items-center'>
           <Form className='w-full flex flex-col pt-2 pb-4' onSubmit={handleSubmit}>
@@ -92,7 +96,7 @@ const App = () => {
               <Form.Control
                 value={url}
                 onChange={handleChangeURL}
-                className='text-gray-700 shadow border rounded border-gray-300 focus:outline-none focus:shadow-outline
+                className='text-white shadow border roundme border-gray-300 focus:outline-none focus:shadow-outline
               px-3 mb-3'
                 type='text'
                 placeholder='URL'
@@ -100,7 +104,7 @@ const App = () => {
               <Form.Control
                 value={cat}
                 onChange={handleChangeCAT}
-                className='text-gray-700 shadow border rounded border-gray-300 focus:outline-none focus:shadow-outline
+                className='text-white shadow border roundme border-gray-300 focus:outline-none focus:shadow-outline
               px-3 mb-3'
                 type='text'
                 placeholder='category (defaults to default)'
@@ -108,7 +112,7 @@ const App = () => {
               <Form.Control
                 value={title}
                 onChange={handleChangeTITLE}
-                className='text-gray-700 shadow border rounded border-gray-300 focus:outline-none focus:shadow-outline
+                className='text-white shadow border roundme border-gray-300 focus:outline-none focus:shadow-outline
               px-3 mb-3'
                 type='text'
                 placeholder='title ( by default taken from og:image or html title'
@@ -116,12 +120,13 @@ const App = () => {
             </Form.Group>
             <Button
               type='submit'
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold rounded py-2 px-4 text-sm'
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold roundme py-2 px-4 text-sm'
             >
               Add
             </Button>
           </Form>
         </div>
+
         <InfoAlert showInfo={showInfo} setShowInfo={setShowInfo}></InfoAlert>
         <hr className='mt-2 mb-4' />
         <div>
@@ -134,12 +139,14 @@ const App = () => {
         <div>
           <More loadNextPage={loadNextPage}></More>
         </div>
-        <address className='italic text-center pb-4'>
-          <Delete />
-          <a href='/'>Marks</a>
-        </address>
       </Container>
+      <div id="deletecontainer" className="deletecontainer align-right">
+        <Container>
+        <Delete />
+        </Container>
+      </div>
     </div>
+
   )
 }
 

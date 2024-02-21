@@ -1,0 +1,1 @@
+curl -s  "https://moz.com/top-500/download?table=top500Domains"|tail -n+2|cut -d'"' -f4|shuf|head -n50|while read a ;do curl -s -u aaa:BBB http://127.0.0.1:8787/link_add -XPOST -d"url=https://$a";done

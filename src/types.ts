@@ -19,3 +19,7 @@ export type OGP = {
   description?: string
   image?: string
 }
+
+export type Env = {
+	CACHE: KVNamespace;
+};

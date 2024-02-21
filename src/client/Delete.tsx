@@ -41,7 +41,7 @@ export const Delete = () => {
 
   return (
     <div>
-      <Button variant='link' onClick={handleShow} className='italic no-underline text-black pb-0'>
+      <Button variant='link' onClick={handleShow} className='italic no-underline bg-red-500 text-white font-bold rounded py-2 px-4 text-sm pb-0'>
         Delete Link
       </Button>
       <Modal show={show} onHide={handleClose} backdrop='static' keyboard={false} centered>
